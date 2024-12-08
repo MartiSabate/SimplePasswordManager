@@ -20,18 +20,13 @@ def write_key():
 
 key = load_key() # + master_pwd.encode() # encode the password to conver the string into bytes so fer can handle it
 fer = Fernet(key) # initialize the encryption module with the loaded key
-# key = load_key() + pwd.encode() # For some reason this line works in the tutorial, however it is not used at all as per its complexity  hence left as this
-# fer = Fernet(key)
-
-# token1 = fer.encrypt(b'secret1') #< How to encrypt
-# print((fer.decrypt(token1)).decode()) #< how to decrypt
 
 
 def generateMasterPassword(): #function used to generate the master key and a random salt and store it in local files
 
     # generete a random salt
     SALT = os.urandom(16)
-    MASTER_PWD_RAW = getpass.getpass(prompt="Por favor inserta la contraseña maestra: ")
+    MASTER_PWD_RAW = getpass.getpass(prompt="Please insert the master password: ")
 
     # Convert the input string to a byte string (encoded as UTF-8)
     MASTER_PWD = MASTER_PWD_RAW.encode('utf-8')
@@ -58,7 +53,7 @@ def verifyMasterPassword(): #ask the user a master password and verify it
         SALT = file.read()
 
 
-    MASTER_PWD_RAW = getpass.getpass(prompt="Por favor inserta la contraseña maestra: ")
+    MASTER_PWD_RAW = getpass.getpass(prompt="Please insert the master password: ")
 
     # Convert the input string to a byte string (encoded as UTF-8)
     MASTER_PWD = MASTER_PWD_RAW.encode('utf-8')
@@ -96,7 +91,7 @@ def view():
 
 def add():
     name = input("Account name: ")
-    pwd = input("Password: ")
+    pwd = getpass.getpass("Password: ")
     with open('passwords.txt', 'a') as f:
         #f.write(name + "|" + fer.encrypt(pwd.encode()).decode() + "\n")
         f.write(name + "|" + str(fer.encrypt(pwd.encode()).decode()) + "\n") #once the password is encoded and encrypted, it is being decoded so it doesn't store as byte string
